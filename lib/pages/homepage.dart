@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projetotarsis/db/propriedades_dao.dart';
+
 
 import '../domain/propriedades.dart';
 
@@ -11,16 +13,35 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Propriedade> propriedades = [];
   int selectedIndex = 0;
 
   void initState(){
     super.initState();
     loadData();
+
   }
 
+
   loadData() async {
-    await PropriedadesDao().listarPropriedades();
+    propriedades = await PropriedadesDao().listarPropriedades();
+    setState(() {
+      print(propriedades[0]);
+    });
   }
+
+  getIconForIndex(int index) {
+    switch (index) {
+      case 0: return Icons.medical_services_rounded;
+      case 1: return Icons.smoke_free;
+      case 2: return Icons.verified_outlined;
+      case 3: return CupertinoIcons.exclamationmark_circle;
+      case 4: return Icons.arrow_circle_right;
+      default: return Icons.info_outline;
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +67,10 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         //  appBar: AppBar(backgroundColor: Colors.indigo[900]),
-
+        bottomNavigationBar: Container(
+          height: 70,
+          color: Colors.indigo[900],
+        ),
         body: ListView(
             children: [
               GridView(
@@ -123,41 +147,69 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ]
               ),
-              Divider(),
-              Align(
-                child: Container(
-                  padding: EdgeInsets.all(6),
-                  alignment: Alignment.topLeft,
-                  width: 350,
-                  height: 220,
-                  color: Colors.white,
-                  child: ListView(
-                    children: [
-                      Text(
-                        'ÚLTIMAS NOTÍCIAS:     Data 23/08/2025'
-                            '\n',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
 
-                      Text(
-                        'CANCER NÃO:',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text("Últimas notícias: ", style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white
+                ),),
+              ),
+              Container(
+                height: 300,
+                margin: EdgeInsets.all(16),
+                padding: EdgeInsets.all(16),
+                color: Colors.white,
+                child: ListView.builder(
+                  itemCount: propriedades.length,
+                  itemBuilder: (context, i) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 2, vertical: 10),
+                      child: buildNoticia(propriedades[i]),
+                    );
+                  },
 
-
-                    ],
-                  ),
                 ),
               ),
+
+
+
+
+
             ]
         ),
       ),
+    );
+
+
+  }
+
+  buildNoticia(Propriedade p) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(getIconForIndex(p.iconType)),
+            SizedBox(width: 5,),
+            Text(
+              p.titulo,
+              maxLines: 100,
+              style: TextStyle(
+                  fontSize: 14
+              ),
+            ),
+          ],
+
+        ),
+        Text(
+          p.texto,
+          maxLines: 100,
+          style: TextStyle(
+              fontSize: 12
+          ),
+        ),
+      ],
     );
   }
 }
