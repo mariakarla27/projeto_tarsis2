@@ -1,7 +1,5 @@
 import 'package:projetotarsis/db/db_helper.dart';
-
 import 'package:sqflite/sqlite_api.dart';
-
 import '../domain/propriedades.dart';
 
 class PropriedadesDao {

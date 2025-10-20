@@ -3,7 +3,6 @@ class Propriedade {
   late String titulo;
   late String texto;
 
-
   Propriedade({
     required this.iconType,
     required this.titulo,
@@ -15,7 +14,6 @@ class Propriedade {
     iconType = json['icon_type'];
     titulo = json['titulo'];
     texto = json['texto'];
-
   }
 
   Map<String, dynamic> toJson() {

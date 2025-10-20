@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projetotarsis/db/propriedades_dao.dart';
+import '../api/address_Api.dart';
+import '../domain/address.dart';
 import '../domain/propriedades.dart';
 
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
+//lembrar de olhar um exemplo do Tarsis
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -280,13 +282,39 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+ /* Future<void> loadNoticias() async {
+    try {
+      final response = await dio.get(
+        Uri.parse('https://my-json-server.typicode.com/mariakarla27/api_fake2/noticias'),
+      );
 
-
-
-
-
-
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        setState(() {
+          listaNoticias = data.map((item) => Noticia.fromJson(item)).toList();
+        });
+      } else {
+        print('Erro ao carregar notícias: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erro geral ao carregar notícias: $e');
+    }
+  }
+  Future<void> onPressedSearchCEP() async {
+    String titulo = tituloController.text;
+    Address address = await AddressApi().findByCep(titulo);
+    addressController.text = address.completeAddress;
+  }*/
 
 }
+
+
+
+
+
+
+
+
+
 
 
