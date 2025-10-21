@@ -3,7 +3,7 @@ import '../domain/propriedades.dart';
 
 class PropriedadesApi {
   final dio = Dio();
-  final String baseUrl = 'https://my-json-server.typicode.com/tarsisms/fake-api';
+  final String baseUrl = 'https://my-json-server.typicode.com/mariakarla27/api-fake';
 
   Future<List<Propriedade>> findAll() async {
     List<Propriedade> listaNoticias  = [];

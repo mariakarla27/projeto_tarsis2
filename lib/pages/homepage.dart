@@ -1,30 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projetotarsis/api/propriedadesApi.dart';
 import 'package:projetotarsis/db/propriedades_dao.dart';
 import '../api/address_Api.dart';
 import '../domain/address.dart';
 import '../domain/propriedades.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-//lembrar de olhar um exemplo do Tarsis
+
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-
 class _HomePageState extends State<HomePage> {
   late Future<List<Propriedade>> futurePropriedades;
   int selectedIndex = 0;
 
-
   void initState() {
     super.initState();
-    futurePropriedades = PropriedadesDao().listarPropriedades();
+    futurePropriedades = PropriedadesApi().findAll();
+    //
   }
-
 
   //loadData() async {
   //propriedades = await PropriedadesDao().listarPropriedades();
@@ -32,7 +30,6 @@ class _HomePageState extends State<HomePage> {
   //print(propriedades[0]);
   //});
   //}
-
 
   getIconForIndex(int index) {
     switch (index) {
@@ -50,7 +47,6 @@ class _HomePageState extends State<HomePage> {
         return Icons.info_outline;
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -91,21 +87,17 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Align(
                       child: Container(
-                        alignment:
-                        Alignment.center,
+                        alignment: Alignment.center,
                         //PARA CENTRALIZAR O CONTEUDO
                         color: Colors.white,
-                        width:
-                        150,
+                        width: 150,
                         // PARA AUMENTAR A LARGURA (ACONSELHO COLOCAR TODAS DO MESMO TAMANHO)
-                        height:
-                        60,
+                        height: 60,
                         // PARA AUMENTAR O TAMANHO (ACONSELHO COLOCAR TODAS DO MESMO TAMANHO)
                         child: Text(
                           'QUIZ DA ROTINA',
                           style: TextStyle(
-                            fontSize:
-                            16,
+                            fontSize: 16,
                             // PARA DIMINUIR A FONTE E FICAR PARECIDA COM A FOTO
                             fontWeight: FontWeight.bold,
                           ),
@@ -175,23 +167,24 @@ class _HomePageState extends State<HomePage> {
                 child: FutureBuilder(
                   future: futurePropriedades,
                   builder: (context, snapshot) {
+                    if(snapshot.hasError){
+                      return Text('error');
+
+                    }
                     if (snapshot.hasData) {
-                      List<Propriedade> listaPropriedades =
-                          snapshot.requireData;
+                      List<Propriedade> listaPropriedades = snapshot.requireData;
                       return buildListView(listaPropriedades);
                     }
 
-
                     return Center(
                         child: CircularProgressIndicator(
-                          color: Color(0xFF846EB4),
-                        ));
+                      color: Color(0xFF846EB4),
+                    ));
                   },
                 ),
               )
             ])));
   }
-
 
   buildListView(listaPropriedades) {
     return ListView.builder(
@@ -201,13 +194,11 @@ class _HomePageState extends State<HomePage> {
         return CardPropriedade(
           //criar uma classe "card propriedades"
 
-
           listaPropriedades[i],
         );
       },
     );
   }
-
 
   buildNoticia(Propriedade p) {
     return Column(
@@ -215,7 +206,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         Row(
           children: [
-            Icon(getIconForIndex(p.iconType)),
+            Icon(getIconForIndex(p.icone)),
             SizedBox(
               width: 5,
             ),
@@ -235,7 +226,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
   CardPropriedade(Propriedade propriedade) {
     return Container(
       margin: EdgeInsets.only(bottom: 16),
@@ -244,11 +234,10 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Row(
             children: [
               Icon(
-                getIconForIndex(propriedade.iconType),
+                getIconForIndex(propriedade.icone),
                 color: Colors.indigo[900],
               ),
               SizedBox(width: 8),
@@ -265,9 +254,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
 
-
           SizedBox(height: 6),
-
 
           // Texto/descrição
           Text(
@@ -282,7 +269,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
- /* Future<void> loadNoticias() async {
+  /* Future<void> loadNoticias() async {
     try {
       final response = await dio.get(
         Uri.parse('https://my-json-server.typicode.com/mariakarla27/api_fake2/noticias'),
@@ -305,16 +292,4 @@ class _HomePageState extends State<HomePage> {
     Address address = await AddressApi().findByCep(titulo);
     addressController.text = address.completeAddress;
   }*/
-
 }
-
-
-
-
-
-
-
-
-
-
-

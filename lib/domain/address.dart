@@ -1,16 +1,16 @@
 class Address {
   late String titulo;
   late String texto;
-  late String icon;
+  late String icone;
 
 
   Address({
     required this.titulo,
     required this.texto,
-    required this.icon,
+    required this.icone,
 
   });
-  String get completeAddress => '$titulo - $icon, $icon';
+  String get completeAddress => '$titulo ,$texto, $icone ';
 
   Address.fromJson(Map<String, dynamic> json) {
     // if(json['cep'] != null){
@@ -20,14 +20,14 @@ class Address {
     // }
     titulo = json['titulo'] ?? '';
     texto = json['texto'] ?? '';
-    icon = json['icon'] ?? '';
+    icone = json['icone'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['titulo'] = this.titulo;
     data['texto'] = this.texto;
-    data['icon'] = this.icon;
+    data['icone'] = this.icone;
     return data;
   }
 }
