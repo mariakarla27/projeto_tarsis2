@@ -15,7 +15,6 @@ class PropriedadesApi {
 
     if (response.statusCode == 200) {
       var listResult = response.data;
-      print(listResult);
       for (var json in listResult) {
         Propriedade propriedade = Propriedade.fromJson(json);
         listaNoticias.add(propriedade);

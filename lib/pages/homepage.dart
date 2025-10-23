@@ -1,14 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projetotarsis/api/propriedadesApi.dart';
-import 'package:projetotarsis/db/propriedades_dao.dart';
-import '../api/address_Api.dart';
-import '../domain/address.dart';
 import '../domain/propriedades.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -167,12 +163,12 @@ class _HomePageState extends State<HomePage> {
                 child: FutureBuilder(
                   future: futurePropriedades,
                   builder: (context, snapshot) {
-                    if(snapshot.hasError){
+                    if (snapshot.hasError) {
                       return Text('error');
-
                     }
                     if (snapshot.hasData) {
-                      List<Propriedade> listaPropriedades = snapshot.requireData;
+                      List<Propriedade> listaPropriedades =
+                          snapshot.requireData;
                       return buildListView(listaPropriedades);
                     }
 
@@ -193,7 +189,6 @@ class _HomePageState extends State<HomePage> {
       itemBuilder: (context, i) {
         return CardPropriedade(
           //criar uma classe "card propriedades"
-
           listaPropriedades[i],
         );
       },
@@ -206,7 +201,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         Row(
           children: [
-            Icon(getIconForIndex(p.icone)),
+            Image.network(p.icone),
             SizedBox(
               width: 5,
             ),
@@ -236,14 +231,15 @@ class _HomePageState extends State<HomePage> {
         children: [
           Row(
             children: [
-              Icon(
-                getIconForIndex(propriedade.icone),
-                color: Colors.indigo[900],
+              Image.network(
+                propriedade.icone,
+                width: 50,
               ),
               SizedBox(width: 8),
               Expanded(
                 child: Text(
                   propriedade.titulo,
+                  textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -259,6 +255,7 @@ class _HomePageState extends State<HomePage> {
           // Texto/descrição
           Text(
             propriedade.texto,
+            textAlign: TextAlign.justify,
             style: TextStyle(
               fontSize: 14,
               color: Colors.grey[800],

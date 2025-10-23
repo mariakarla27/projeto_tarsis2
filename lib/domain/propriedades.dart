@@ -1,7 +1,7 @@
 class Propriedade {
   late String titulo;
   late String texto;
-  late int icone;
+  late String icone;
 
   Propriedade({
     required this.titulo,
