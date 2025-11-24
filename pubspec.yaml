@@ -37,6 +37,7 @@ dependencies:
   sqflite:
   path:
   dio:
+  provider:
 
 dev_dependencies:
   flutter_test:
