@@ -51,15 +51,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               SizedBox(height: 16),
               TextField(
-                controller: cepController,
-                decoration: InputDecoration(
-                  hintText: 'CEP',
-                  suffixIcon: IconButton(onPressed: onPressedSearchCEP, icon: Icon(Icons.search)),
-                  focusedBorder: buildFirstItemOutlineInputBorder(),
-                  border: buildFirstItemOutlineInputBorder(),
-                ),
-              ),
-              TextField(
                 controller: addressController,
                 decoration: InputDecoration(
                   hintText: 'Endereço',
@@ -97,7 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
     String password = passwordController.text;
 
     User user = User(username, password);
-    await PropriedadesDao().salvar(user);
+    // await PropriedadesDao().salvar(user);
 
     print('Usuario Cadastrado com sucesso!');
     Navigator.pop(context);

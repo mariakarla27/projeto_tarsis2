@@ -5,18 +5,18 @@ class ArticlesApi {
   final dio = Dio();
   String baseUrl = 'https://newsapi.org/v2';
 
-  Future<List<Articles>> findAll() async {
+  Future<List<Article>> findAll() async {
     //se atentar ao link da api,perguntar ao Tarsis
-    var result = await dio.get('$baseUrl/everything?q=cancer&from=2025-09-23&sortBy=publishedAt&apiKey=025a8799dfe447ddb1894e590f2dc194');
+    var result = await dio.get('$baseUrl/everything?q=cancer&from=2025-11-31&sortBy=publishedAt&apiKey=025a8799dfe447ddb1894e590f2dc194');
 
     //if (result.statusCode == 200) {
     var jsonResult = result.data;
 
     var list = jsonResult['articles'];
-    List<Articles> articles = [];
+    List<Article> articles = [];
     for (var json in list) {
       print(json);
-      Articles art = Articles.fromJson(json);
+      Article art = Article.fromJson(json);
       articles.add(art);
     }
 

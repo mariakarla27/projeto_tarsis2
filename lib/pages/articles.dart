@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:projetotarsis/api/article_api.dart';
 import 'package:projetotarsis/api/propriedadesApi.dart';
 import 'package:projetotarsis/domain/articles.dart';
+import 'package:projetotarsis/pages/favorite_article_page.dart';
+import 'package:projetotarsis/provider/favorite_provider.dart';
+import 'package:provider/provider.dart';
 import '../domain/propriedades.dart';
 
 class ArticlePage extends StatefulWidget {
@@ -13,7 +16,7 @@ class ArticlePage extends StatefulWidget {
 }
 
 class _ArticlePageState extends State<ArticlePage> {
-  late Future<List<Articles>> futureArticles;
+  late Future<List<Article>> futureArticles;
   int selectedIndex = 0;
 
   void initState() {
@@ -25,11 +28,21 @@ class _ArticlePageState extends State<ArticlePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.padding),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return FavoriteArticlePage();
+              },
+            ));
+          },
+        ),
         backgroundColor: Colors.deepPurpleAccent[100],
         appBar: AppBar(
           backgroundColor: Colors.indigo[900],
           title: Text(
-            'Início',
+            'Artigos',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w500,
@@ -59,7 +72,7 @@ class _ArticlePageState extends State<ArticlePage> {
                   }
 
                   if (snapshot.hasData) {
-                    List<Articles> lista = snapshot.requireData;
+                    List<Article> lista = snapshot.requireData;
                     return buildListView(lista);
                   }
 
@@ -90,7 +103,33 @@ class _ArticlePageState extends State<ArticlePage> {
     );
   }
 
-  CardArticle(Articles article) {
+  CardArticle(Article article) {
+    return Stack(
+      children: [
+        buildCardArticleContent(article),
+
+        Positioned(
+          top: 8,
+          right: 8,
+          child: IconButton(
+            icon: Icon(Icons.favorite, color: Colors.pink, size: 32),
+            onPressed: () {
+              var provider = context.read<FavoriteProvider>();
+              provider.addArticle(article);
+            },
+          ),
+        )
+
+
+        // IconButton(
+        //   icon: Icon(Icons.favorite, color: Colors.pink, size: 32),
+        //   onPressed: () {},
+        // ),
+      ],
+    );
+  }
+
+  buildCardArticleContent(article) {
     return Container(
       margin: EdgeInsets.only(bottom: 16),
       padding: EdgeInsets.all(12),

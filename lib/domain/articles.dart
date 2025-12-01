@@ -1,4 +1,4 @@
-class Articles {
+class Article {
   late String source;
   late String author;
   late String title;
@@ -8,7 +8,7 @@ class Articles {
   late String publishedAt;
   late String content;
 
-  Articles(
+  Article(
       {required this.source,
       required this.author,
       required this.title,
@@ -18,7 +18,7 @@ class Articles {
       required this.publishedAt,
       required this.content});
 
-  Articles.fromJson(Map<String, dynamic> json) {
+  Article.fromJson(Map<String, dynamic> json) {
     source = json['source']['name'] ?? '';
     author = json['author'] ?? '';
     title = json['title'] ?? '';

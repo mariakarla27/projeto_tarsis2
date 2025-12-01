@@ -1,7 +1,7 @@
 import 'package:projetotarsis/api/users_api.dart';
 import 'package:projetotarsis/domain/user.dart';
 import 'package:projetotarsis/pages/register_page.dart';
-import 'package:projetotarsis/provider/profile_provider.dart';
+import 'package:projetotarsis/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
